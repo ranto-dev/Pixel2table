@@ -5,9 +5,7 @@ CREATE TABLE image1_features (
     aspect_ratio DOUBLE PRECISION,
     solidity DOUBLE PRECISION,
     circularity DOUBLE PRECISION,
-    orientation DOUBLE PRECISION,
     hu_moments DOUBLE PRECISION[],
-    histogram DOUBLE PRECISION[],
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

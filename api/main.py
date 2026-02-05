@@ -1,29 +1,24 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import base64, cv2, numpy as np
-from fastapi.middleware.cors import CORSMiddleware
 
 from feature_extractor import FeatureExtractor
 from database import insert_features, fetch_all
 
 app = FastAPI()
-
-origins = [
-    '*'
-]
+extractor = FeatureExtractor()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = origins,
-    allow_credentials= True,
-    allow_methods = ["*"],
-    allow_headers = ["*"]
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
-
-extractor = FeatureExtractor()
 
 TABLES = ["image1_features", "image2_features", "image3_features"]
 capture_index = 0
+max_captures = 3  # Peut être changé dynamiquement depuis l'UI
 
 class ImagePayload(BaseModel):
     image: str
@@ -32,7 +27,7 @@ class ImagePayload(BaseModel):
 def capture_image(payload: ImagePayload):
     global capture_index
 
-    if capture_index >= 3:
+    if capture_index >= max_captures:
         return {"done": True}
 
     img_data = base64.b64decode(payload.image.split(",")[1])
@@ -49,12 +44,9 @@ def capture_image(payload: ImagePayload):
     insert_features(TABLES[capture_index], features)
 
     capture_index += 1
-    return {"count": capture_index}
+    return {"count": capture_index, "message": f"Image {capture_index} capturée !"}
 
 @app.get("/results")
 def results():
-    return {
-        "image1": fetch_all("image1_features"),
-        "image2": fetch_all("image2_features"),
-        "image3": fetch_all("image3_features")
-    }
+    data = {f"image{i+1}": fetch_all(f"image{i+1}_features") for i in range(3)}
+    return data

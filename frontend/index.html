@@ -2,20 +2,27 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Pixel2Table</title>
+    <title>Pixel2Table 3D UI</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="app">
       <h1>Pixel2Table</h1>
 
-      <video id="video" autoplay></video>
-      <canvas id="canvas" hidden></canvas>
+      <label for="numImages">Nombre d'images à capturer :</label>
+      <input type="number" id="numImages" value="3" min="1" max="10" />
+
+      <div class="video-container">
+        <video id="video" autoplay></video>
+        <canvas id="canvas" hidden></canvas>
+        <div id="loading" hidden>🔄 Chargement...</div>
+      </div>
 
       <button id="captureBtn">📸 Capturer</button>
       <button id="resultsBtn" hidden>📊 Afficher les résultats</button>
 
-      <pre id="output"></pre>
+      <div id="indicators"></div>
+      <div id="tablesContainer"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>

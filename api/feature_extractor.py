@@ -19,9 +19,9 @@ class FeatureExtractor:
         x, y, w, h = cv2.boundingRect(contour)
 
         hull = cv2.convexHull(contour)
-        solidity = area / cv2.contourArea(hull)
+        solidity = area / cv2.contourArea(hull) if cv2.contourArea(hull) > 0 else 0
 
-        circularity = 4 * np.pi * area / (perimeter ** 2)
+        circularity = 4 * np.pi * area / (perimeter ** 2) if perimeter > 0 else 0
 
         hu = cv2.HuMoments(cv2.moments(contour))
         hu = -np.sign(hu) * np.log10(np.abs(hu) + 1e-10)
@@ -29,7 +29,7 @@ class FeatureExtractor:
         return {
             "area": area,
             "perimeter": perimeter,
-            "aspect_ratio": w / h,
+            "aspect_ratio": w / h if h > 0 else 0,
             "solidity": solidity,
             "circularity": circularity,
             "hu_moments": hu.flatten()
