@@ -14,22 +14,27 @@ def insert_features(table, features):
     cur = conn.cursor()
 
     cur.execute(f"""
-        INSERT INTO {table} (
-            area, perimeter, aspect_ratio,
-            solidity, circularity, orientation,
-            hu_moments, histogram
-        ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
+        INSERT INTO {table} 
+        (area, perimeter, aspect_ratio, solidity, circularity, hu_moments)
+        VALUES (%s,%s,%s,%s,%s,%s)
     """, (
         features["area"],
         features["perimeter"],
         features["aspect_ratio"],
         features["solidity"],
         features["circularity"],
-        features["orientation"],
-        features["hu_moments"].tolist(),
-        features["histogram"].tolist()
+        features["hu_moments"].tolist()
     ))
 
     conn.commit()
     cur.close()
     conn.close()
+
+def fetch_all(table):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(f"SELECT * FROM {table}")
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return rows

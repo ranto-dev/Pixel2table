@@ -1,0 +1,41 @@
+body {
+  background: radial-gradient(#0f2027, #203a43, #2c5364);
+  font-family: system-ui;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  margin-top: 40px;
+  text-align: center;
+}
+
+video {
+  width: 420px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+}
+
+button {
+  margin: 12px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #00f260, #0575e6);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+pre {
+  text-align: left;
+  margin-top: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 10px;
+}

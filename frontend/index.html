@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pixel2Table</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>Pixel2Table</h1>
+
+      <video id="video" autoplay></video>
+      <canvas id="canvas" hidden></canvas>
+
+      <button id="captureBtn">📸 Capturer</button>
+      <button id="resultsBtn" hidden>📊 Afficher les résultats</button>
+
+      <pre id="output"></pre>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
